@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>あなたの名前</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500&family=Shippori+Mincho:wght@400;500&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fafaf8;
+      --text: #1a1a18;
+      --muted: #888880;
+      --border: #e0e0d8;
+      --accent: #2a2a28;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Serif JP', serif;
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    /* ── Header / Nav ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .site-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 16px;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
+    }
+
+    nav a {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--text); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 140px 48px 80px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-en {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(48px, 8vw, 88px);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.05;
+      margin-bottom: 24px;
+    }
+
+    .hero-sub {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    .hero-desc {
+      margin-top: 20px;
+      max-width: 480px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    /* ── Layout ── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 48px 120px;
+    }
+
+    /* ── Section ── */
+    section {
+      padding: 72px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section:last-child { border-bottom: none; }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+
+    /* ── Info Table ── */
+    .info-grid {
+      display: grid;
+      gap: 0;
+    }
+
+    .info-row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      padding: 14px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .info-row:last-child { border-bottom: 1px solid var(--border); }
+
+    .info-key {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      padding-top: 1px;
+    }
+
+    .info-val {
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .info-val small {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* ── Family ── */
+    .family-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .family-card {
+      padding: 24px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .family-card:nth-child(odd) { padding-right: 40px; }
+    .family-card:nth-child(even) { padding-left: 40px; border-left: 1px solid var(--border); }
+
+    .family-role {
+      font-size: 11px;
+      letter-spacing: 0.10em;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .family-name {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .family-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .family-bottom {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Timeline ── */
+    .timeline {
+      display: grid;
+      gap: 0;
+    }
+
+    .tl-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 24px;
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .tl-item:last-child { border-bottom: 1px solid var(--border); }
+
+    .tl-year {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      color: var(--muted);
+      padding-top: 2px;
+    }
+
+    .tl-content {}
+
+    .tl-title {
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .tl-place {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      letter-spacing: 0.04em;
+    }
+
+    .tl-body {
+      font-size: 13px;
+      color: #555550;
+      line-height: 1.85;
+    }
+
+    .tl-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 14px;
+    }
+
+    .tl-tag {
+      font-size: 11px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 2px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── People ── */
+    .people-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .people-table th {
+      font-size: 11px;
+      letter-spacing: 0.10em;
+      color: var(--muted);
+      text-align: left;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-weight: 400;
+    }
+
+    .people-table td {
+      font-size: 13px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.7;
+    }
+
+    .people-table td:first-child { width: 160px; }
+    .people-table td:nth-child(2) { width: 160px; color: var(--muted); font-size: 12px; }
+
+    /* ── Prefs ── */
+    .prefs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--border);
+    }
+
+    .pref-col {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pref-col:nth-child(2) {
+      padding-left: 32px;
+      border-left: 1px solid var(--border);
+    }
+
+    .pref-col:nth-child(3) {
+      padding-left: 32px;
+      border-left: 1px solid var(--border);
+    }
+
+    .pref-label {
+      font-size: 11px;
+      letter-spacing: 0.10em;
+      color: var(--muted);
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+
+    .pref-list {
+      list-style: none;
+      font-size: 13px;
+      line-height: 2;
+    }
+
+    /* ── Updated ── */
+    .updated {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      margin-top: 60px;
+    }
+
+    @media (max-width: 640px) {
+      header { padding: 0 20px; }
+      .hero { padding: 100px 20px 60px; }
+      main { padding: 0 20px 80px; }
+      .family-grid { grid-template-columns: 1fr; }
+      .family-card:nth-child(even) { border-left: none; padding-left: 0; }
+      .prefs-grid { grid-template-columns: 1fr; }
+      .pref-col:nth-child(2), .pref-col:nth-child(3) { border-left: none; padding-left: 0; }
+      .tl-item { grid-template-columns: 56px 1fr; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="site-name" href="#">YourName</a>
+  <nav>
+    <a href="#info">Info</a>
+    <a href="#family">Family</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#people">People</a>
+    <a href="#hobbies">Hobbies</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div style="max-width:860px;margin:0 auto;">
+    <div class="hero-en">あなたの名前</div>
+    <div class="hero-sub">YOUR NAME &nbsp;—&nbsp; Student × Engineer</div>
+    <div class="hero-desc">ここに一言キャッチコピーを書く。<br>自分らしい言葉で。</div>
+  </div>
+</div>
+
+<main>
+
+  <!-- ── Info ── -->
+  <section id="info">
+    <div class="section-label">Basic Information</div>
+    <div class="info-grid">
+      <div class="info-row">
+        <span class="info-key">生年月日</span>
+        <span class="info-val">2000.01.01</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">出身地</span>
+        <span class="info-val">東京都〇〇区</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">学校</span>
+        <span class="info-val">
+          〇〇大学 〇年生
+          <small>〇〇学部 〇〇学科</small>
+        </span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">仕事</span>
+        <span class="info-val">
+          株式会社〇〇
+          <small>業務委託 / エンジニア</small>
+        </span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">高校</span>
+        <span class="info-val">〇〇高等学校</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Future</span>
+        <span class="info-val">〇〇な人生を送りたい。</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Family ── -->
+  <section id="family">
+    <div class="section-label">Family</div>
+    <div class="family-grid family-bottom">
+      <div class="family-card">
+        <div class="family-role">Father</div>
+        <div class="family-name">お父さんの名前</div>
+        <div class="family-desc">職業や出身地、人柄など一言。</div>
+      </div>
+      <div class="family-card">
+        <div class="family-role">Mother</div>
+        <div class="family-name">お母さんの名前</div>
+        <div class="family-desc">職業や出身地、人柄など一言。</div>
+      </div>
+      <div class="family-card">
+        <div class="family-role">Sibling</div>
+        <div class="family-name">兄弟・姉妹の名前</div>
+        <div class="family-desc">年齢差や関係性など一言。</div>
+      </div>
+      <div class="family-card">
+        <div class="family-role">Pet</div>
+        <div class="family-name">ペットの名前</div>
+        <div class="family-desc">種類、年齢など。ペットがいなければ削除。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Timeline ── -->
+  <section id="timeline">
+    <div class="section-label">Timeline</div>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-year">2000</div>
+        <div class="tl-content">
+          <div class="tl-title">誕生</div>
+          <div class="tl-place">東京都〇〇区 / 〇〇病院</div>
+          <div class="tl-body">生まれた場所や当時のエピソードを書く。</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">2007</div>
+        <div class="tl-content">
+          <div class="tl-title">〇〇小学校</div>
+          <div class="tl-place">〇〇区 / 小学校</div>
+          <div class="tl-body">どんな小学校生活だったか。習い事、友達、思い出など。</div>
+          <div class="tl-tags">
+            <span class="tl-tag">サッカー</span>
+            <span class="tl-tag">習字</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">2013</div>
+        <div class="tl-content">
+          <div class="tl-title">〇〇中学校</div>
+          <div class="tl-place">〇〇区 / 中学校 · 部活名</div>
+          <div class="tl-body">中学時代のエピソード、部活、成長した点など。</div>
+          <div class="tl-tags">
+            <span class="tl-tag">部活名</span>
+            <span class="tl-tag">生徒会</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">2016</div>
+        <div class="tl-content">
+          <div class="tl-title">〇〇高等学校</div>
+          <div class="tl-place">〇〇県 / 高校</div>
+          <div class="tl-body">高校時代のエピソード、部活、受験、転機など。</div>
+          <div class="tl-tags">
+            <span class="tl-tag">部活名</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">2019</div>
+        <div class="tl-content">
+          <div class="tl-title">〇〇大学 入学</div>
+          <div class="tl-place">〇〇学部 〇〇学科</div>
+          <div class="tl-body">大学生活、サークル、バイト、転機など自由に。</div>
+          <div class="tl-tags">
+            <span class="tl-tag">サークル</span>
+            <span class="tl-tag">インターン</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">Now</div>
+        <div class="tl-content">
+          <div class="tl-title">現在</div>
+          <div class="tl-place">〇〇大学 〇年生 / 株式会社〇〇</div>
+          <div class="tl-body">今やっていること、これから目指していることを書く。</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── People ── -->
+  <section id="people">
+    <div class="section-label">Key People</div>
+    <table class="people-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Relation</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>〇〇〇〇</td>
+          <td>幼馴染</td>
+          <td>小学校から一緒。今でも連絡を取り合う大切な友人。</td>
+        </tr>
+        <tr>
+          <td>〇〇〇〇</td>
+          <td>高校の親友</td>
+          <td>部活を通じて仲良くなった。自分に影響を与えた人物。</td>
+        </tr>
+        <tr>
+          <td>〇〇〇〇</td>
+          <td>大学の友人</td>
+          <td>一緒にプロジェクトを立ち上げた仲間。</td>
+        </tr>
+        <tr>
+          <td>〇〇〇〇</td>
+          <td>仕事の上司</td>
+          <td>自分の価値観・働き方を変えてくれた人。</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── Hobbies ── -->
+  <section id="hobbies">
+    <div class="section-label">Preferences</div>
+    <div class="prefs-grid">
+      <div class="pref-col">
+        <div class="pref-label">Sports / Teams</div>
+        <ul class="pref-list">
+          <li>〇〇（競技名）</li>
+          <li>〇〇（好きなチーム）</li>
+        </ul>
+      </div>
+      <div class="pref-col">
+        <div class="pref-label">Food</div>
+        <ul class="pref-list">
+          <li>〇〇</li>
+          <li>〇〇</li>
+          <li>〇〇</li>
+        </ul>
+      </div>
+      <div class="pref-col">
+        <div class="pref-label">Others</div>
+        <ul class="pref-list">
+          <li>好きな色：〇〇</li>
+          <li>趣味：〇〇</li>
+          <li>最近ハマっていること：〇〇</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="updated">Updated 2026.04</div>
+
+</main>
+
+</body>
+</html>
